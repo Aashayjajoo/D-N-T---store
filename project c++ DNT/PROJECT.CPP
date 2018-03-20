@@ -1,0 +1,1012 @@
+//GENERAL STORE
+
+//HEADER FILES
+#include<fstream.h>
+#include<conio.h>
+#include<math.h>
+#include<stdio.h>
+#include<string.h>
+#include<dos.h>
+
+//FUNCTION DECLARETION
+void enter();
+void bye();
+void head();
+void dnt();
+void user();
+void useroption();
+void customeroption();
+void password();
+void customer();
+void store();
+void add();
+void disp();
+void show();
+void del();
+void update();
+void category();
+void purchase();
+void seeitem();
+void viewcust();
+
+int count=0;
+
+//CLASSES
+class itemmaster{
+	char name[20],code[10];
+	int qty;
+	float price;
+	char desc[100];
+	char category[20];
+
+     public:
+
+	void getdata(){
+
+		cout<<"\n\nEnter the following details\n\n";
+		cout<<"Itemname :";
+		gets(name);
+		cout<<"\nItemcode :" ;
+		cin>>code;
+		cout<<"\nPrice    :";
+		cin>>price;
+		cout<<"\nCategory :";
+		cin>>category;
+		cout<<"\nQuantity :";
+		cin>>qty;
+		}
+
+	void showdata(){
+
+		cout<<"\n|\t"<<code<<"\t\t"<<name<<"\t\t"<<price<<"\t\t"<<category<<"\t\t"<<qty;
+		cout<<"\n";
+		}
+
+	int retprice(){
+		return price;
+		}
+
+	char *retcat(){
+		return category;
+		}
+
+	char *retitm(){
+		return code;
+		}
+
+	char *retname(){
+		return name;
+		}
+
+	int retquantity(){
+		return qty;
+		}
+
+	void copy(itemmaster s){
+		strcpy(name,s.name);
+		strcpy(code,s.code);
+		price=s.price;
+		strcpy(category,s.category);
+		}
+
+	void quantity(int l){
+		qty=qty-l;
+		}
+
+	}s,s1,s2;
+
+
+class cust:public itemmaster{
+	 char cname[30];
+	 char caddress[50];
+	 char cphone[11];
+	 int cqty;
+	 int cbill;
+
+	 public:
+		void cdetail(){
+		cout<<"\nEnter the following details=>\n\n";
+		cout<<"Name    :";
+		gets(cname);
+		cout<<"\nAddress :";
+		gets(caddress);
+		cout<<"\nPhone No:";
+		cin>>cphone;
+			}
+
+		cust(){
+		cbill=0;
+			}
+
+		void cb(){
+		cbill=0;
+			}
+
+		void cquantity(int l){
+		cqty=l;
+			}
+
+		void bill(int a){
+		cbill=cbill+cqty*a;
+			}
+
+		int retqty(){
+		return cqty;
+			}
+
+		int retbill(){
+		return cbill;
+			}
+
+		void cshow(){
+		cout<<"Name    :";
+		puts(cname);
+		cout<<"\nAddress :";
+		puts(caddress);
+		cout<<"\nPhone No:";
+		cout<<cphone;
+			}
+
+		void cshowdata(cust c){
+		cout<<"\n|\t"<<c.retitm()<<"\t\t"<<c.retname()<<"\t\t"<<c.retprice()<<"\t\t"<<c.retcat()<<"\t\t"<<cqty;
+		cout<<"\n";
+			}
+
+		void bill1(){
+		cout<<"\n|------------------------------------------------------------------------------|";
+		int a;
+
+		if(cbill>=500){
+		a=cbill*0.1;
+		cout<<"\n\n\nBill==> Rs."<<cbill;
+		cout<<"\n\nDiscount(10% off)==> Rs."<<a;
+		cbill=cbill-a;
+		}
+		else if(cbill>=1000){
+		a=cbill*0.15;
+		cout<<"\n\nDiscount(15% off) worth Rs."<<a;
+		cbill=cbill-a;
+		}
+
+		cout<<"\n\nYour total amount is  ==> Rs."<<cbill;
+		cbill=0;
+		}
+
+		void bill2(){
+
+		int a;
+		if(cbill>=500){
+		a=cbill*0.1;
+		cout<<"\n\n\nBill==> Rs."<<cbill;
+		cout<<"\n\nDiscount(10% off)==> Rs."<<a;
+		cbill=cbill-a;
+		}
+		else if(cbill>=1000){
+		a=cbill*0.15;
+		cout<<"\n\nDiscount(15% off) worth Rs."<<a;
+		cbill=cbill-a;
+		}
+		cout<<"\n\nBill==> Rs."<<cbill<<"\n\n";
+		cbill=0;
+			}
+
+		char *retcname(){
+		return cname;
+			}
+
+	 }c,c1;
+
+
+//MAIN FUNCTION
+void main(){
+	clrscr();
+	enter();
+	dnt();
+	delay(300);
+	clrscr();
+	bye();
+	}
+
+void dnt(){
+
+char a;
+start:
+head();
+cout<<"\n\n\t\t\tWelcome to DnT GENERAL STORE\n\n\n";
+cout<<"\n\t __________________________________ ";
+cout<<"\n\t|           |                      |";
+cout<<"\n\t| <Press1>  |  If you are USER     |";
+cout<<"\n\t|___________|______________________|";
+cout<<"\n\t|           |                      |";
+cout<<"\n\t| <Press2>  |  If you are CUSTOMER |";
+cout<<"\n\t|___________|______________________|";
+cout<<"\n\t|           |                      |";
+cout<<"\n\t| <Press3>  |  To Exit             |";
+cout<<"\n\t|___________|______________________|\n\n\t==> ";
+cin>>a;
+
+if(a=='1')
+	password();
+	else if(a=='2')
+		customer();
+		else if(a=='3')
+			cout<<"\n\n\n\tGoodbye !!!!!";
+			else{
+			cout<<"\n\tCheck your Entry!!\n\t";
+			getch();
+			clrscr();
+			goto start;
+			}
+
+}
+
+void head(){
+
+cout<<"\n\n\n			     ^^^^^^^^^^^^^^^^^^^^^^^^^";
+cout<<"\n                             !                       !\n";
+cout<<"			   ! !                       ! !\n";
+cout<<"                        !  ! !   DnT  GENERAL STORE  ! !  ! \n";
+cout<<"			   ! !                       ! !\n";
+cout<<"                             !                       !\n";
+cout<<"                             ~~~*******************~~~\n\n\n";
+}
+
+
+void enter(){
+cout<<"\n\n\n\n\n\n\n\n\n\n\n\n";
+cout<<"\t\t*****************************************\n";
+cout<<"\t\t<\t\t\t\t\t>\n";
+cout<<"\t\t<\t\t WELCOME     \t\t>";
+delay(900);
+cout<<"\n\t\t<\t\t\t\t\t>";
+delay(600);
+cout<<"\n\t\t<\t\t\t\t\t>";
+delay(600);
+cout<<"\n\t\t<\t\t\t\t\t>";
+delay(600);
+cout<<"\n\t\t<\t\t   TO       \t\t>";
+delay(900);
+cout<<"\n\t\t<\t\t\t\t\t>";
+delay(600);
+cout<<"\n\t\t<\t\t\t\t\t>";
+delay(600);
+cout<<"\n\t\t<\t\t\t\t\t>";
+delay(600);
+cout<<"\n\t\t<\t     DnT GENERAL STORE  \t>\n";
+cout<<"\t\t<\t\t\t\t\t>\n";
+cout<<"\t\t*****************************************\n";
+delay(900);
+clrscr();
+}
+
+void bye(){
+cout<<"\n\n\n\n\n\n\n\n\n\n\n\n";
+cout<<"\t\t*****************************************\n";
+cout<<"\t\t<\t\t\t\t\t>";
+delay(600);
+cout<<"\n\t\t<\t\t\t\t\t>";
+delay(600);
+cout<<"\n\t\t<\t\t\t\t\t>";
+delay(600);
+cout<<"\n\t\t<\t\tTHANK YOU\t\t>";
+delay(600);
+cout<<"\n\t\t<\t\t\t\t\t>";
+delay(1000);
+cout<<"\n\t\t<\t\t\t\t\t>";
+delay(600);
+cout<<"\n\t\t<\t\t\t\t\t>";
+delay(600);
+cout<<"\n\t\t<\t\tGOOD BYE\t\t>";
+delay(600);
+cout<<"\n\t\t<\t\t\t\t\t>\n";
+cout<<"\t\t<\t\t\t\t\t>\n";
+cout<<"\t\t*****************************************\n";
+delay(600);
+clrscr();
+}
+
+void category(){
+clrscr();
+head();
+int a;
+char c[20];
+cout<<"\n\tTo Display the items";
+cout<<"\n\t ____________________________ ";
+cout<<"\n\t|          |                 |";
+cout<<"\n\t| <Press1> |  For Deo        |";
+cout<<"\n\t|__________|_________________|";
+cout<<"\n\t|          |                 |";
+cout<<"\n\t| <Press2> |  For Shampoo    |";
+cout<<"\n\t|__________|_________________|";
+cout<<"\n\t|          |                 |";
+cout<<"\n\t| <Press3> |  For Soap       |";
+cout<<"\n\t|__________|_________________|";
+cout<<"\n\t|          |                 |";
+cout<<"\n\t| <Press4> |  For Chips      |";
+cout<<"\n\t|__________|_________________|";
+cout<<"\n\t|          |                 |";
+cout<<"\n\t| <Press5> |  For Drinks     |";
+cout<<"\n\t|__________|_________________|";
+cout<<"\n\t|          |                 |";
+cout<<"\n\t| <Press6> |  For Chocolate  |";
+cout<<"\n\t|__________|_________________|";
+cout<<"\n\t|          |                 |";
+cout<<"\n\t| <Press7> |  For FaceWash   |";
+cout<<"\n\t|__________|_________________|";
+cout<<"\n\t|          |                 |";
+cout<<"\n\t| <Press8> |  For Noodles    |";
+cout<<"\n\t|__________|_________________|";
+start:
+cout<<"\n\n\t==> ";
+cin>>a;
+switch(a){
+	case 1:
+	strcpy(c,"Deo");
+	break;
+	case 2:
+	strcpy(c,"Shampoo");
+	break;
+	case 3:
+	strcpy(c,"Soap");
+	break;
+	case 4:
+	strcpy(c,"Chips");
+	break;
+	case 5:
+	strcpy(c,"Drinks");
+	break;
+	case 6:
+	strcpy(c,"Choco");
+	break;
+	case 7:
+	strcpy(c,"Fwash");
+	break;
+	case 8:
+	strcpy(c,"Noodles");
+	break;
+	default:
+	cout<<"\n\tWrong Entry !!  Enter again \n\t";
+	goto start;
+	}
+	store();
+
+ifstream f("dnt.txt");
+	if(!f){
+	cout<<"File doesnot exist";
+	return;
+	}
+
+f.read((char*)&s,sizeof(s));
+while(f){
+
+	if(strcmpi(s.retcat(),c)==0)
+	s.showdata();
+	f.read((char*)&s,sizeof(s));
+	}
+cout<<"\n|------------------------------------------------------------------------------|";
+f.close();
+}
+
+
+void password(){
+int b=0;
+char a[10];
+while(b<5){
+	cout<<"\n\n\tEnter Password --  ";
+	cin>>a;
+if(strcmp(a,"DNT")==0){
+	user();
+	break;
+	}
+		else
+		cout<<"\n\tTry again !!";
+b++;
+}
+	if(b==5){
+	clrscr();
+	dnt();
+	}
+}
+
+
+void store(){
+cout<<"\n\n";
+cout<<"\n|------------------------------------------------------------------------------|";
+cout<<"\n|  Item Code   |    Item name    |    Price    |     Category    |   Quantity  |";
+cout<<"\n|------------------------------------------------------------------------------|";
+}
+
+void add(){
+clrscr();
+head();
+cout<<"\n\t\t\t\t ADD MENU\n";
+cout<<  "\t\t\t\t^^^^^^^^^^\n\n\n\n\n";
+	ifstream f("dnt.txt");
+	if(!f){
+	cout<<"File doesnot exist";
+	return;
+	}
+ofstream f1("temp.txt");
+	if(!f1){
+	cout<<"error";
+	return;
+	}
+s1.getdata();
+
+f.read((char*)&s,sizeof(s));
+while((strcmp(s.retitm(),s1.retitm())<0) && f){
+	f1.write((char*)&s,sizeof(s));
+	f.read((char*)&s,sizeof(s));
+	}
+
+f1.write((char*)&s1,sizeof(s));
+
+while(f){
+	f1.write((char*)&s,sizeof(s));
+	f.read((char*)&s,sizeof(s));
+	}
+f.close();
+f1.close();
+remove("dnt.txt");
+rename("temp.txt","dnt.txt");
+}
+
+
+void show(){
+clrscr();
+head();
+cout<<"\n\t\t\t\t  SHOW MENU\n";
+cout<<  "\t\t\t\t ^^^^^^^^^^^\n\n";
+store();
+int flag=0;
+ifstream f("dnt.txt");
+	if(!f){
+	cout<<"File doesnot exist";
+	return;
+	}
+
+f.read((char*)&s,sizeof(s));
+while(f){
+	s.showdata();
+	flag++;
+		if(flag%15==0){
+		flag=flag+15;
+		getch();
+		}
+f.read((char*)&s,sizeof(s));
+}
+cout<<"\n|------------------------------------------------------------------------------|";
+f.close();
+}
+
+
+void disp(){
+clrscr();
+head();
+cout<<"\n\t\t\t\t     SHOW MENU\n";
+cout<<  "\t\t\t\t    ^^^^^^^^^^^\n\n\n\n";
+char c[20];
+cout<<"Enter the category to be displayed-->";
+cin>>c;
+
+ifstream f("dnt.txt");
+	if(!f){
+	cout<<"File doesnot exist";
+	return;
+	}
+int flag=0;
+store();
+
+f.read((char*)&s,sizeof(s));
+while(f){
+
+	if(strcmpi(s.retcat(),c)==0){
+	s.showdata();
+	flag=1;
+	cout<<"\n|------------------------------------------------------------------------------|";
+	}
+
+f.read((char*)&s,sizeof(s));
+}
+
+if(flag==0){
+
+	cout<<"\n\n\n\n\tCategory Unavailable.";
+	}
+f.close();
+}
+
+
+void del(){
+clrscr();
+head();
+char d[10],p;
+cout<<"\nEnter \n'I' To delete using Item no.\n'N' To delete using Item name  -->";
+cin>>p;
+
+if(p=='I'||p=='i'){
+	cout<<"\nEnter item code to be deleted- ";
+	cin>>d;
+	}
+	else if(p=='n'||p=='N'){
+		cout<<"\nEnter item name to be deleted- ";
+		cin>>d;
+		}
+
+ifstream f2("dnt.txt");
+
+	if(!f2){
+	cout<<"File doesnot exist";
+	return;
+	}
+f2.read((char*)&s,sizeof(s));
+
+while(f2){
+	count++;
+	f2.read((char*)&s,sizeof(s));
+	}
+f2.close();
+
+int flag=0;
+ifstream f("dnt.txt");
+
+	if(!f){
+	cout<<"File doesnot exist";
+	return;
+	}
+
+ofstream f1("temp.txt",ios::app);
+
+	if(!f1){
+	cout<<"error";
+	return;
+	}
+f.read((char*)&s,sizeof(s));
+
+if(p=='i'||p=='I') {
+	while(f){
+		if(strcmpi(s.retitm(),d)!=0){
+		f1.write((char*)&s,sizeof(s));
+		flag++;
+		}
+	f.read((char*)&s,sizeof(s));
+	}
+}
+
+else if(p=='n'||p=='N'){
+
+while(f){
+	if(strcmpi(s.retname(),d)!=0){
+	f1.write((char*)&s,sizeof(s));
+	flag++;
+	}
+	f.read((char*)&s,sizeof(s));
+}
+
+}
+
+if(flag<count)
+cout<<"\nRecord Deleted.\n";
+
+	else
+	cout<<"\nRecord not found.\n";
+
+f.close();
+f1.close();
+remove("dnt.txt");
+rename("temp.txt","dnt.txt");
+
+}
+
+
+void update(){
+clrscr();
+head();
+fstream f("dnt.txt",ios::in|ios::out);
+
+	if(!f){
+	cout<<"File doesnot exist";
+	return;
+	}
+cout<<"\nEnter the itemcode to be updated.\n";
+int flag=0;
+char a[10];
+cin>>a;
+f.read((char*)&s,sizeof(s));
+
+while(f){
+
+if(strcmpi(s.retitm(),a)==0){
+	s2.getdata();
+	f.seekg(f.tellg()-sizeof(s));
+	f.write((char*)&s2,sizeof(s));
+	cout<<"\nRecord Updated.\n";
+	flag=1;
+	break;
+	}
+f.read((char*)&s,sizeof(s));
+}
+
+if(flag==0)
+cout<<"\nRecord not found.\n";
+
+f.close();
+}
+
+
+void user(){
+clrscr();
+head();
+int a;
+cout<<"\n\n\n\n\tSelect from options below:-\n";
+cout<<"\n\t ___________________________________ ";
+cout<<"\n\t|          |                        |";
+cout<<"\n\t| <Press1> |  To continue           |";
+cout<<"\n\t|__________|________________________|";
+cout<<"\n\t|          |                        |";
+cout<<"\n\t| <Press2> |  To return Home page   |";
+cout<<"\n\t|__________|________________________|";
+start:
+cout<<"\n\n\t==>";
+cin>>a;
+
+if(a==1)
+	useroption();
+	else if(a==2){
+		clrscr();
+		dnt();
+		}
+		else{
+		cout<<"\n\tWrong Entry..... Enter Again !!!\n\t";
+		goto start;
+		}
+}
+
+
+void useroption(){
+clrscr();
+head();
+int q;
+char w;
+start:
+cout<<"\n\n\t\t\t\t     User Menu\n";
+cout<<"\t\t\t\t    ^^^^^^^^^^^\n\n";
+cout<<"\n\n\tSelect from options below:-\n\n";
+cout<<"\n\t _____________________________________________ ";
+cout<<"\n\t|          |                                  |";
+cout<<"\n\t| <Press1> | To Add a record                  |";
+cout<<"\n\t|__________|__________________________________|";
+cout<<"\n\t|          |                                  |";
+cout<<"\n\t| <Press2> | To Delete a record               |";
+cout<<"\n\t|__________|__________________________________|";
+cout<<"\n\t|          |                                  |";
+cout<<"\n\t| <Press3> | To update records                |";
+cout<<"\n\t|__________|__________________________________|";
+cout<<"\n\t|          |                                  |";
+cout<<"\n\t| <Press4> | To display all records           |";
+cout<<"\n\t|__________|__________________________________|";
+cout<<"\n\t|          |                                  |";
+cout<<"\n\t| <Press5> | To display records by category   |";
+cout<<"\n\t|__________|__________________________________|";
+cout<<"\n\t|          |                                  |";
+cout<<"\n\t| <Press6> | To display details of customers  |";
+cout<<"\n\t|__________|__________________________________|";
+cout<<"\n\t|          |                                  |";
+cout<<"\n\t| <Press7> | To return to home page           |";
+cout<<"\n\t|__________|__________________________________|";
+
+cout<<"\n\n\t==> ";
+cin>>q;
+switch(q){
+	case 1:
+	add();
+	break;
+	case 2:
+	del();
+	break;
+	case 3:
+	update();
+	break;
+	case 4:
+	show();
+	break;
+	case 5:
+	disp();
+	break;
+	case 6:
+	viewcust();
+	break;
+	case 7:
+	clrscr();
+	dnt();
+	return;
+	default:
+	cout<<"\n\tWrong Entry !!!\n\t";
+	}
+getch();
+cout<<"\n\n\n\tSelect from options below:-\n";
+cout<<"\n\t ________________________________________ ";
+cout<<"\n\t|            |                           |";
+cout<<"\n\t| <Press'c'> |  To continue              |";
+cout<<"\n\t|____________|___________________________|";
+cout<<"\n\t|            |                           |";
+cout<<"\n\t| <Press'r'> |  To return to Home page   |";
+cout<<"\n\t|____________|___________________________|";
+cout<<"\n\t|            |                           |";
+cout<<"\n\t| <Press'x'> |  To exit                  |";
+cout<<"\n\t|____________|___________________________|";
+cout<<"\n\n\t==>";
+
+
+cin>>w;
+if(w=='c'){
+	clrscr();
+	head();
+	goto start;
+	}
+	else if(w=='r'){
+		clrscr();
+		dnt();
+		}
+		else
+		cout<<"\n\n\t\t\t\t     Goodbye!!!\n\n\n";
+}
+
+
+void customer(){
+clrscr();
+head();
+int a;
+cout<<"\n\n\n\n\tSelect from options below:-\n";
+cout<<"\n\t ___________________________________ ";
+cout<<"\n\t|          |                        |";
+cout<<"\n\t| <Press1> |  To continue           |";
+cout<<"\n\t|__________|________________________|";
+cout<<"\n\t|          |                        |";
+cout<<"\n\t| <Press2> |  To return Home page   |";
+cout<<"\n\t|__________|________________________|";
+
+start:
+cout<<"\n\n\t==>";
+cin>>a;
+
+if(a==1)
+customeroption();
+	else if(a==2){
+	clrscr();
+	dnt();
+	}
+		else{
+		cout<<"\n\tWrong Entry\n\t";
+		goto start;
+		}
+}
+
+
+void customeroption(){
+clrscr();
+head();
+int q;
+char w;
+start:
+cout<<"\n\n\t\t\t\t  Customer Menu\n";
+cout<<"\t\t\t\t ^^^^^^^^^^^^^^^\n\n";
+cout<<"\n\t    ___________________________________________________ ";
+cout<<"\n\t   (                                                   )";
+cout<<"\n\t   (                Offer Available                    )";
+cout<<"\n\t   (               ^^^^^^^^^^^^^^^^^                   )";
+cout<<"\n\t   (   10% Discount on shopping worth Rs.500 or more.  )";
+cout<<"\n\t   (                                                   )";
+cout<<"\n\t   (   15% Discount on shopping worth Rs.1000 or more. )";
+cout<<"\n\t   (___________________________________________________)\n";
+cout<<"\n\n\tSelect from options below:-\n";
+cout<<"\n\t ___________________________________________ ";
+cout<<"\n\t|          |                                |";
+cout<<"\n\t| <Press1> |  To show all categories        |";
+cout<<"\n\t|__________|________________________________|";
+cout<<"\n\t|          |                                |";
+cout<<"\n\t| <Press2> |  To show all items             |";
+cout<<"\n\t|__________|________________________________|";
+cout<<"\n\t|          |                                |";
+cout<<"\n\t| <Press3> |  To purchase items             |";
+cout<<"\n\t|__________|________________________________|";
+cout<<"\n\t|          |                                |";
+cout<<"\n\t| <Press4> |  To return to Home page        |";
+cout<<"\n\t|__________|________________________________|";
+cout<<"\n\n\t==> ";
+cin>>q;
+switch(q){
+	case 1:
+	category();
+	break;
+	case 2:
+	show();
+	break;
+	case 3:
+	purchase();
+	break;
+	case 4:
+	clrscr();
+	dnt();
+	return;
+	default:
+	cout<<"\n\tWrong Entry !!!";
+
+	}
+getch();
+cout<<"\n\n\n\tSelect from options below:-\n";
+cout<<"\n\t ________________________________________ ";
+cout<<"\n\t|            |                           |";
+cout<<"\n\t| <Press'c'> |  To continue              |";
+cout<<"\n\t|____________|___________________________|";
+cout<<"\n\t|            |                           |";
+cout<<"\n\t| <Press'r'> |  To return to Home page   |";
+cout<<"\n\t|____________|___________________________|";
+cout<<"\n\t|            |                           |";
+cout<<"\n\t| <Press'x'> |  To exit                  |";
+cout<<"\n\t|____________|___________________________|";
+cout<<"\n\n\t==>";
+
+cin>>w;
+
+if(w=='c'){
+	clrscr();
+	head();
+	goto start;
+	}
+	else if(w=='r'){
+		clrscr();
+		dnt();
+		}
+		else
+		cout<<"\n\t\t\t    Goodbye!!!\n\n\n";
+}
+
+
+void purchase(){
+char a[30],w;
+int l;
+clrscr();
+head();
+c.cdetail();
+fstream f2("customer.txt",ios::app);
+fstream f1("Purchase.txt",ios::out);
+fstream f("dnt.txt",ios::in|ios::out);
+start:
+cout<<"\n\nEnter the Itemcode of the item to be purchased: ";
+cin>>a;
+cout<<"\nEnter quantity: ";
+cin>>l;
+c.cquantity(l);
+
+if(!f||!f1||!f2){
+	cout<<"File doesnot exist";
+	return;
+	}
+
+int flag=0;
+f.read((char*)&s,sizeof(s));
+while(f){
+
+if(strcmpi(s.retitm(),a)==0){
+	c.copy(s);
+
+	if(l>s.retquantity()||s.retquantity()==0){
+	cout<<"\n\tOut of Stock.. :(\n\n";
+	goto start1;
+	}
+s.quantity(l);
+c.bill(s.retprice());
+f2.write((char*)&c,sizeof(c));
+f1.write((char*)&c,sizeof(c));
+f.seekg(f.tellg()-sizeof(s));
+f.write((char*)&s,sizeof(s));
+
+cout<<"\n\t\tItem purchased.\n";
+flag=1;
+break;
+
+}
+f.read((char*)&s,sizeof(s));
+}
+
+if(flag==0)
+cout<<"\nRecord not found.\n";
+start1:
+cout<<"\n\nEnter 'Y' to Purchase more 'N'to see the purchased item\n==> ";
+	cin>>w;
+	if(w=='Y'||w=='y'){
+	f.seekg(0,ios::beg);
+	goto start;
+	}
+		else if(w=='n'||w=='N') {
+		f.close();
+		f1.close();
+		f2.close();
+		seeitem();
+		}
+	else{
+	cout<<"\nCheck your entry !!";
+	goto start1;
+	}
+
+}
+
+void seeitem(){
+clrscr();
+
+head();
+cout<<"\n\t\t\t\t      SHOW MENU\n";
+cout<<  "\t\t\t\t     ^^^^^^^^^^^\n\n";
+c.cshow();
+
+store();
+fstream f("Purchase.txt",ios::in|ios::out);
+if(!f){
+cout<<"File doesnot exist";
+return;
+}
+f.read((char*)&c,sizeof(c));
+while(f){
+	c.cshowdata(c);
+	f.read((char*)&c,sizeof(c));
+
+}
+f.close();
+c.bill1();
+}
+
+void viewcust(){
+clrscr();
+
+head();
+cout<<"\n\t\t\t\t    CUSTOMER MENU\n";
+cout<<  "\t\t\t\t   ^^^^^^^^^^^^^^^\n\n";
+
+ifstream f("customer.txt");
+
+if(!f){
+	cout<<"File doesnot exist";
+	return;
+	}
+
+int a,flag=0,sum=0;
+
+char n[50];
+
+f.read((char*)&c,sizeof(c));
+while(f){
+
+if(flag==1)
+	if(strcmpi(n,c.retcname())!=0){
+	flag=0;
+	cout<<"Bill==> Rs."<<sum<<"\n";
+	}
+
+if(flag==0){
+	sum=0;
+	cout<<"\n\n\n\n\n";
+	c.cshow();
+	cout<<"\n";
+	store();
+	flag=1;
+	}
+
+strcpy(n,c.retcname());
+cout<<"\n";
+c.cshowdata(c);
+cout<<"\n|------------------------------------------------------------------------------|";
+c.bill(c.retprice());
+sum=sum+c.retprice()*c.retqty();
+getch();
+f.read((char*)&c,sizeof(c));
+}
+if(sum>=500)
+	sum=sum-0.1*sum;
+	else if(sum>=1000)
+		sum=sum-0.15*sum;
+
+cout<<"Bill==> Rs."<<sum;
+c.cb();
+f.close();
+}
